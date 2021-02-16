@@ -1,0 +1,198 @@
+openapi: 3.0.0
+info:
+  title: Todo API
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /products:
+    get:
+      summary: Get Products
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+      operationId: get-products
+    post:
+      summary: Add Product
+      operationId: post-products
+      responses:
+        '201':
+          description: Created
+        '404':
+          description: Not Found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+    delete:
+      summary: Delete PRoduct
+      operationId: delete-products
+      responses:
+        '200':
+          description: OK
+    patch:
+      summary: Modify Product
+      operationId: patch-products
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+  /sellers:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Seller'
+      operationId: get-sellers
+  /login:
+    get:
+      summary: Create Login
+      operationId: get-login
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+    post:
+      summary: ''
+      operationId: post-login
+      responses:
+        '201':
+          description: Created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+  /become-seller:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '201':
+          description: Created
+      operationId: get-become-seller
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Seller'
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      description: ''
+      x-examples:
+        Alice Smith:
+          id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        dateOfBirth:
+          type: string
+          format: date
+          example: '1997-10-31'
+        emailVerified:
+          type: boolean
+          description: Set to true if the user's email has been verified.
+        createDate:
+          type: string
+          format: date
+          description: The date that the user was created.
+      required:
+        - id
+        - name
+        - email
+        - emailVerified
+    Product:
+      title: Products
+      type: object
+      x-examples:
+        example-1:
+          id: 0
+          title: string
+          category: string
+          location: string
+          price: 0
+          date: string
+          delivery_type: string
+          seller: string
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        category:
+          type: string
+        location:
+          type: string
+        price:
+          type: number
+        date:
+          type: string
+        delivery_type:
+          type: string
+        seller:
+          type: string
+        images:
+          type: string
+    Seller:
+      title: Seller
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        location:
+          type: string
+        contact:
+          type: string
+        products:
+          type:
+            - string
+            - array
+          items:
+            type: integer
